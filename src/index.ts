@@ -18,7 +18,7 @@ const run = (): void => {
 const saveIpAddressEntry = async (db: Firestore): Promise<void> => {
   // Get time info
   const now = new Date();
-  const iso = now.toString
+  const iso = now.toISOString();
   const timestamp = now.getTime();
 
   // Set up data to be saved
