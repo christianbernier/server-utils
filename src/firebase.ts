@@ -1,5 +1,5 @@
 import { initializeApp, cert } from 'firebase-admin/app';
-import { Firestore, getFirestore } from 'firebase-admin/firestore';
+import { Firestore, WriteResult, getFirestore } from 'firebase-admin/firestore';
 
 const dotenv = require('dotenv');
 
@@ -27,7 +27,8 @@ export const initFirebase = (): Firestore => {
  * @param collection - The name of the collection.
  * @param document - The name of the document.
  * @param data - The data to be saved.
+ * @returns The result of the write process.
  */
-export const saveToFirebase = async (db: Firestore, collection: string, document: string, data: object) => {
-  await db.collection(collection).doc(document).set(data);
+export const saveToFirebase = async (db: Firestore, collection: string, document: string, data: object): Promise<WriteResult> => {
+  return await db.collection(collection).doc(document).set(data);
 }
