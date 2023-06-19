@@ -3,6 +3,7 @@ import { initFirebase, saveToFirebase } from "./firebase";
 import { getIpAddress } from "./ip";
 import { initTwilio, sendTextMessage } from "./twilio";
 import { Twilio } from "twilio";
+import { initSendgrid, sendEmail } from "./sendgrid";
 
 const THIRTY_MINUTES_IN_MILLISECONDS = 1000 * 60 * 30;
 
@@ -10,9 +11,12 @@ const THIRTY_MINUTES_IN_MILLISECONDS = 1000 * 60 * 30;
  * @description Initialize the service.
  */
 const init = (): void => {
+  // Initialize services
   const db = initFirebase();
   const twilioClient = initTwilio();
+  initSendgrid();
   
+  // Check when the IP address changes and send updates accordingly.
   let ipAddress = '';
   setInterval(async () => {
     ipAddress = await checkIpAddress(ipAddress, db, twilioClient);
@@ -36,6 +40,7 @@ const checkIpAddress = async (lastIpAddress: string, db: Firestore, twilioClient
   // If the IP address changes, send a text notification.
   if (currentIpAddress !== lastIpAddress) {
     sendIpAddressUpdateText(twilioClient);
+    sendEmail(currentIpAddress);
   }
 
   return currentIpAddress;
