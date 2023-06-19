@@ -1,13 +1,12 @@
 import { initializeApp, cert } from 'firebase-admin/app';
 import { Firestore, WriteResult, getFirestore } from 'firebase-admin/firestore';
 
-const dotenv = require('dotenv');
-
 /**
  * @description Initialize the Firebase database.
  * @returns A reference to the database.
  */
 export const initFirebase = (): Firestore => {
+  const dotenv = require('dotenv');
   dotenv.config();
 
   initializeApp({
