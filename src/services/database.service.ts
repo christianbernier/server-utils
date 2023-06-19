@@ -1,9 +1,13 @@
-import { cert, initializeApp } from "firebase-admin/app";
-import { Firestore, WriteResult, getFirestore } from "firebase-admin/firestore";
-import { EnvService } from "./env.service";
+import { cert, initializeApp } from 'firebase-admin/app';
+import { Firestore, WriteResult, getFirestore } from 'firebase-admin/firestore';
+import { EnvService } from './env.service';
 
 interface IDatabaseService {
-  saveEntry(collection: string, document: string, data: object): Promise<WriteResult>;
+  saveEntry(
+    collection: string,
+    document: string,
+    data: object
+  ): Promise<WriteResult>;
 }
 
 export class DatabaseService implements IDatabaseService {
@@ -20,9 +24,9 @@ export class DatabaseService implements IDatabaseService {
         projectId: EnvService.of().getVar('FIREBASE_PROJECT_ID'),
         privateKey: EnvService.of().getVar('FIREBASE_PRIVATE_KEY'),
         clientEmail: EnvService.of().getVar('FIREBASE_CLIENT_EMAIL'),
-      })
+      }),
     });
-    
+
     this.firestore = getFirestore();
   }
 
@@ -34,10 +38,11 @@ export class DatabaseService implements IDatabaseService {
     return DatabaseService.singleton;
   }
 
-  public async saveEntry(collection: string, document: string, data: object): Promise<WriteResult> {
-    return await this.firestore
-      .collection(collection)
-      .doc(document)
-      .set(data);
+  public async saveEntry(
+    collection: string,
+    document: string,
+    data: object
+  ): Promise<WriteResult> {
+    return await this.firestore.collection(collection).doc(document).set(data);
   }
 }

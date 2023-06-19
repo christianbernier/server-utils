@@ -1,5 +1,5 @@
-import { Client } from "@sendgrid/client";
-import { EnvService } from "./env.service";
+import { Client } from '@sendgrid/client';
+import { EnvService } from './env.service';
 const sgMail = require('@sendgrid/mail');
 
 interface IEmailService {
@@ -37,6 +37,6 @@ export class EmailService implements IEmailService {
       to: EnvService.of().getVar('SENDGRID_TO_EMAIL_ADDRESS'),
       templateId,
       dynamicTemplateData: templateData,
-    })
+    });
   }
 }

@@ -21,6 +21,14 @@ export class EnvService implements IEnvService {
   }
 
   public getVar(key: string): string {
-    return process.env[key]!;
+    const envVar = process.env[key];
+
+    if (!envVar) {
+      throw new Error(
+        `Tried to access env variable that does not exist: ${key}`
+      );
+    }
+
+    return envVar;
   }
 }

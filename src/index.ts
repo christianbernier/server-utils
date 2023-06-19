@@ -1,4 +1,4 @@
-import { IpTrackingUtil } from "./utils";
+import { IpTrackingUtil } from './utils';
 
 (() => {
   IpTrackingUtil.of().start();

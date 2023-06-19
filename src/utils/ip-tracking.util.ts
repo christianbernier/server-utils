@@ -1,5 +1,10 @@
-import { DatabaseService, EmailService, EnvService, IpService } from "../services";
-import { Util } from "./util";
+import {
+  DatabaseService,
+  EmailService,
+  EnvService,
+  IpService,
+} from '../services';
+import { Util } from './util';
 
 const THIRTY_MINUTES_IN_MILLISECONDS = 1000 * 60 * 30;
 
@@ -62,7 +67,7 @@ export class IpTrackingUtil implements Util {
       timestamp,
       time: now.toLocaleString(),
       ipAddress,
-    }
+    };
 
     // Add the data to the database
     DatabaseService.of().saveEntry('ip', documentTitle, data);
@@ -75,8 +80,11 @@ export class IpTrackingUtil implements Util {
    * @private
    */
   private sendEmailNotification(ipAddress: string): void {
-    EmailService.of().sendEmail(EnvService.of().getVar('SENDGRID_TEMPLATE_ID'), {
-      'ip_address': ipAddress,
-    })
+    EmailService.of().sendEmail(
+      EnvService.of().getVar('SENDGRID_TEMPLATE_ID'),
+      {
+        ip_address: ipAddress,
+      }
+    );
   }
 }
